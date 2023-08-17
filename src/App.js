@@ -302,14 +302,14 @@ const PinButton = styled.div`
   border: 1px solid transparent;
 
   &::before {
-    content: "📍";
+    content: "❎";
     margin-right: 4px;
     left: 8px;
     top: 8px;
   }
 
   &:hover {
-    background-color: #f5f5f5;
+    background-color:linear-gradient (#d0fafd,#ffffff);
     border: 1px solid #ccc;
   }
 `;
@@ -527,24 +527,22 @@ const options = {
   ],
   interestsNew: [
     { name: "History", emoji: "🏛️" },
-    { name: "Art", emoji: "🎨" },
+    { name: "Politics", emoji: "👮" },
     { name: "Food", emoji: "🍴" },
     { name: "Music", emoji: "🎵" },
-    { name: "Nature", emoji: "🌳" },
+    { name: "Science", emoji: "🧪" },
     { name: "Sports", emoji: "⚽" },
-    { name: "Photography", emoji: "📷" },
     { name: "Architecture", emoji: "🏰" },
     { name: "Literature", emoji: "📚" },
   ],
 
   interests: [
     "History",
-    "Art",
+    "Politics",
     "Food",
     "Music",
-    "Nature",
+    "Science",
     "Sports",
-    "Photography",
     "Architecture",
     "Literature",
   ],
@@ -599,29 +597,29 @@ const options = {
 };
 
 const topLocations = [
-  { name: "Chennai,Tamilnadu", value: "Chennai/Tamilnadu" },
-  { name: "Kedarnath,Uttarakhand", value: "Chennai/Tamilnadu" },
-  { name: "Ladakh,India", value: "Chennai/Tamilnadu" },
+  { name: "India", value: "India" },
+  { name: "America", value: "America" },
+  { name: "China", value: "China" },
   // add more top locations as needed
 ];
 
 const defaultValues = {
   destinationCountry: "",
-  budget: "250 USD",
+  budget: "1960",
   travelStyle: options.travelStyles[0],
   interestsNew: [],
   accommodationType: options.accommodationTypes[0],
-  transportationType: "Bus",
+  transportationType: "15",
   activityType: [options.activityTypes[0]],
   cuisineType: options.cuisineTypes[0],
-  tripDuration: "3",
+  tripDuration: "1970",
   language: options.languages[0].value,
 };
 
 const Main = ({ loading, response, handleSubmit, handleChange, email }) => (
   <MainContent>
-    <Title>⭐️ Travel Planner ⭐️</Title>
-    {!response && <Subtitle>Fill the form to generate your itinerary</Subtitle>}
+    <Title>⭐️ Know The History ⭐️</Title>
+    {!response && <Subtitle>Fill the form to Get the historical events</Subtitle>}
 
     <ResponseContainer>
       {loading ? <Loading /> : response && <ResponseData response={response} />}
@@ -633,7 +631,7 @@ const ResponseData = ({ response }) => {
   return (
     <ResponseContainer>
       <ResponseTitle>
-        <span role="img" aria-label="emoji"></span> Your travel plan is ready 🎉
+        <span role="img" aria-label="emoji"></span> Ready to Time Travel🎉
       </ResponseTitle>
       <ResponseText>
         <ReactMarkdown>{response}</ReactMarkdown>
@@ -812,7 +810,7 @@ const AITravelPlanner = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    let prompt = `Generate a personalized travel itinerary for a trip to ${values.destinationCountry} with a budget of ${values.budget}. The traveler is interested in a ${values.travelStyle} vacation and enjoys ${values.interestsNew}. They are looking for ${values.accommodationType} accommodations and prefer ${values.transportationType} transportation. The itinerary should include ${values.activityType} activities and ${values.cuisineType} dining options. Please provide a detailed itinerary with daily recommendations for ${values.tripDuration} days, including suggested destinations, activities, and dining options. The itinerary should be written in ${values.language}. `;
+    let prompt = `Think your a History Encyclopedia Generate a personalized History for the place: ${values.destinationCountry} with a year from ${values.budget} to ${values.tripDuration}. intrest category in the history:  ${values.interestsNew}.all details understandable in ${values.transportationType} year old person.The History content should be written in ${values.language}. `;
 
     fetch(`${process.env.REACT_APP_ENDPOINT_URL}`, {
       method: "POST",
@@ -865,10 +863,10 @@ const AITravelPlanner = () => {
         />
         <Panel>
           <FormContainer onSubmit={handleSubmit}>
-            <Label htmlFor="destinationCountry">Destination Country</Label>
+            <Label htmlFor="destinationCountry">Which place History did you want</Label>
             <Input
               type="text"
-              placeholder="e.g. San Francisco/USA, Paris/France, Istanbul/Turkey, etc."
+              placeholder="e.g. Tamilnadu, india, newyork,china etc."
               id="destinationCountry"
               name="destinationCountry"
               value={values.destinationCountry}
@@ -876,7 +874,7 @@ const AITravelPlanner = () => {
               required
             />
             <TopLocationContainer>
-              <Label htmlFor="topDestinations">🔥Top Destionations:</Label>
+              <Label htmlFor="topDestinations">🔥Recommandation:</Label>
               {topLocations.map((location) => (
                 <PinButton
                   key={location.value}
@@ -889,7 +887,7 @@ const AITravelPlanner = () => {
             <FormRow>
               <FormGroup>
                 <Label htmlFor="budget">
-                  Budget
+                  History from
                   <p
                     style={{
                       display: "inline-block",
@@ -897,12 +895,12 @@ const AITravelPlanner = () => {
                       fontSize: "10px",
                     }}
                   >
-                    (with currency)
+                    (in Years)
                   </p>
                 </Label>
                 <Input
                   type="text"
-                  placeholder="e.g. $1000 USD, 1000 EUR, etc."
+                  placeholder="E.g 1970."
                   id="budget"
                   name="budget"
                   value={values.budget}
@@ -912,7 +910,7 @@ const AITravelPlanner = () => {
               </FormGroup>
               <FormGroup>
                 <Label htmlFor="tripDuration">
-                  Trip Duration
+                  To
                   <p
                     style={{
                       display: "inline-block",
@@ -920,7 +918,7 @@ const AITravelPlanner = () => {
                       fontSize: "10px",
                     }}
                   >
-                    (in days)
+                    (in Years)
                   </p>
                 </Label>
                 <Input
@@ -933,7 +931,7 @@ const AITravelPlanner = () => {
                 />
               </FormGroup>
             </FormRow>
-            <Label htmlFor="interests">Interests</Label>
+            <Label htmlFor="interests">Specifically in History</Label>
             <InterestsContainerNew>
               {options.interestsNew.map((interest, index) => (
                 <InterestItemNew
@@ -954,41 +952,10 @@ const AITravelPlanner = () => {
               ))}
             </InterestsContainerNew>
 
-            <FormRow>
-              <FormGroup>
-                <Label htmlFor="accommodationType">Accommodation</Label>
-                <Select
-                  id="accommodationType"
-                  name="accommodationType"
-                  value={values.accommodationType}
-                  onChange={handleChange}
-                >
-                  {options.accommodationTypes.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </Select>
-              </FormGroup>
-              <FormGroup>
-                <Label htmlFor="travelStyle">Travel Style</Label>
-                <Select
-                  id="travelStyle"
-                  name="travelStyle"
-                  value={values.travelStyle}
-                  onChange={handleChange}
-                >
-                  {options.travelStyles.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </Select>
-              </FormGroup>
-            </FormRow>
+            
 
             <Label htmlFor="transportationType">
-              Transportation Type
+              What's Your Age
               <p
                 style={{
                   display: "inline-block",
@@ -997,7 +964,7 @@ const AITravelPlanner = () => {
                   color: "#666",
                 }}
               >
-                (e.g. car, train, bus, etc.)
+                (e.g. 25.)
               </p>
             </Label>
             <Input
@@ -1008,60 +975,7 @@ const AITravelPlanner = () => {
               onChange={handleChange}
               required
             />
-
-            <Label htmlFor="activityType">
-              Activity Type
-              <p
-                style={{
-                  display: "inline-block",
-                  fontSize: "10px",
-
-                  color: "#666",
-                }}
-              >
-                (select multiple options)
-              </p>
-            </Label>
-            <Select
-              id="activityType"
-              name="activityType"
-              multiple
-              value={values.activityType}
-              onChange={handleMultiSelectChange}
-            >
-              {options.activityTypes.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </Select>
-            <Label htmlFor="cuisineType">Cuisine Type</Label>
-            <CuisineTypesContainer>
-              {options.cuisineTypes.map((cuisineType) => (
-                <CuisineType
-                  multiple
-                  value={values.cuisineType}
-                  onChange={handleMultiSelectChange}
-                  key={cuisineType.name}
-                  className={
-                    selectedCuisineTypes.includes(cuisineType.name)
-                      ? "selected"
-                      : ""
-                  }
-                  onClick={() => {
-                    handleCuisineTypeClick(cuisineType.name);
-                  }}
-                >
-                  <span role="img" aria-label={cuisineType.name}>
-                    {cuisineType.emoji}
-                  </span>
-
-                  <br />
-
-                  <span>{cuisineType.name}</span>
-                </CuisineType>
-              ))}
-            </CuisineTypesContainer>
+            
 
             <LanguageSelectorContainer>
               <Label>Language</Label>
